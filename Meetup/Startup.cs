@@ -12,8 +12,8 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using Microsoft.AspNetCore.Identity.UI.Services;
-using Meetup.Models;
 using Microsoft.AspNetCore.Identity;
+using Meetup.ApplicationDbContext.Model;
 
 namespace Meetup
 {
@@ -29,15 +29,22 @@ namespace Meetup
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<AppDbContext>((sp,option) => option.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+  
+            services.AddDbContext<Identity>((sp,option) => option.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<AppDbContext>((sp, option) => option.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllersWithViews();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Meetup", Version = "v1" });
             });
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<AppDbContext>();
+            services.AddIdentity<ApplicationUser, IdentityRole>(opt =>
+            {
+                opt.Password.RequireNonAlphanumeric = false;
+                opt.Password.RequireDigit = false;
+                opt.Password.RequireUppercase = false;
+            })
+                .AddEntityFrameworkStores<Identity>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

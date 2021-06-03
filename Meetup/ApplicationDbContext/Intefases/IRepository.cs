@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Meetup.Models
+namespace Meetup.ApplicationDbContext.Intefases
 {
-    public class Language
+    interface IRepository
     {
-        public string Name { get; set; }
+
     }
 }
