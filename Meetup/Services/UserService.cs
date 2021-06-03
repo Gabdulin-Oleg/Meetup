@@ -53,7 +53,7 @@ namespace Meetup.Services
             if (await userManager.IsInRoleAsync((user), "admin"))
             {
                 await signInManager.SignInAsync(user, false);
-                return RedirectToAction("Get", "Admin");
+                return RedirectToAction("Get", "Meetup");
             }
             else
             {
@@ -61,7 +61,7 @@ namespace Meetup.Services
                 if (result.Succeeded)
                 {
                     await signInManager.SignInAsync(user, false);
-                    return RedirectToAction("Get", "User");
+                    return RedirectToAction("Get", "Meetup");
                 }
                 else
                 {
@@ -73,7 +73,7 @@ namespace Meetup.Services
         {
             // удаляем аутентификационные куки
             await signInManager.SignOutAsync();
-            return RedirectToAction("Get", "User");
+            return RedirectToAction("Get", "Meetup");
         }
     }
 }

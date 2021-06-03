@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Meetup.ApplicationDbContext.Model
+﻿namespace Meetup.ApplicationDbContext.Model
 {
     public class Language
     {

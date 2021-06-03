@@ -1,21 +1,15 @@
 using Meetup.ApplicationDbContext;
+using Meetup.ApplicationDbContext.Model;
+using Meetup.Services;
+using Meetup.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using System;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using Microsoft.AspNetCore.Identity.UI.Services;
-using Microsoft.AspNetCore.Identity;
-using Meetup.ApplicationDbContext.Model;
-using Meetup.Services.Interfaces;
-using Meetup.Services;
 
 namespace Meetup
 {
@@ -31,8 +25,8 @@ namespace Meetup
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-  
-            services.AddDbContext<Identity>((sp,option) => option.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddDbContext<Identity>((sp, option) => option.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
             services.AddDbContext<AppDbContext>((sp, option) => option.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllersWithViews();
             services.AddSwaggerGen(c =>
@@ -46,6 +40,7 @@ namespace Meetup
                 opt.Password.RequireNonAlphanumeric = false;
                 opt.Password.RequireDigit = false;
                 opt.Password.RequireUppercase = false;
+                opt.Password.RequireLowercase = false;
             })
                 .AddEntityFrameworkStores<Identity>();
         }
@@ -59,7 +54,7 @@ namespace Meetup
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Meetup v1"));
             }
-            
+
             app.UseAuthentication();
             app.UseAuthorization();
 

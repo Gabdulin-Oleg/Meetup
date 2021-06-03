@@ -1,15 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Meetup.ViewModels
+﻿namespace Meetup.ViewModels
 {
     public class LoginViewModel
     {
-
+        /// <summary>
+        /// Email
+        /// </summary>
         public string Email { get; set; }
+        /// <summary>
+        /// пароль
+        /// </summary>
         public string Password { get; set; }
+        /// <summary>
+        /// следует ли заплмнить
+        /// </summary>
         public bool RememberMe { get; set; }
 
     }

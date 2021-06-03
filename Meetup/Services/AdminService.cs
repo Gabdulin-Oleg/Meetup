@@ -1,11 +1,8 @@
 ﻿using Meetup.ApplicationDbContext;
 using Meetup.ApplicationDbContext.Model;
 using Meetup.Services.Interfaces;
-using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Meetup.Services
 {

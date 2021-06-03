@@ -1,13 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Meetup.ApplicationDbContext.Model
+﻿namespace Meetup.ApplicationDbContext.Model
 {
     public enum WorkStatus
     {
+        /// <summary>
+        /// усть работа
+        /// </summary>
         Work,
+        /// <summary>
+        /// нет работы
+        /// </summary>
         OutOfWork
     }
 }
