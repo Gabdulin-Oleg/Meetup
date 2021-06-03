@@ -14,6 +14,8 @@ using System.Linq;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Identity;
 using Meetup.ApplicationDbContext.Model;
+using Meetup.Services.Interfaces;
+using Meetup.Services;
 
 namespace Meetup
 {
@@ -37,7 +39,8 @@ namespace Meetup
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Meetup", Version = "v1" });
             });
-
+            services.AddScoped<IAdminService, AdminService>();
+            services.AddScoped<IUserService, UserService>();
             services.AddIdentity<ApplicationUser, IdentityRole>(opt =>
             {
                 opt.Password.RequireNonAlphanumeric = false;

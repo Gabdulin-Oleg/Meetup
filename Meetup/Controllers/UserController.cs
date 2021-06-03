@@ -32,22 +32,23 @@ namespace Meetup.Controllers
         public async Task<IActionResult> Register(RegistredViewModel model)
         {
             bool result = await userService.RegistrationUserAsync(model);
+            
             if(result)
             {
                 return RedirectToAction("Get", "User");
             }
             return Unauthorized();
         }
-
+        [HttpPost("Login")]
         public async Task<IActionResult> LoginAsync(LoginViewModel model)
         {
-            var result = await userService.LoginAsync(model);
-            if(result)
-            {
-                return RedirectToAction("Get", "User");
-            }
-            return Unauthorized();
-
+            return await userService.LoginAsync(model);
+        }
+        [HttpPost("Logout")]
+        public async Task<IActionResult> Logout()
+        {
+            // удаляем аутентификационные куки
+            return  await userService.Logout();
         }
     }
 }

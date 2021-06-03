@@ -8,5 +8,6 @@ namespace Meetup.Services.Interfaces
     {
         public Task<bool> RegistrationUserAsync(RegistredViewModel model);
         public Task<IActionResult> LoginAsync(LoginViewModel model);
+        public Task<IActionResult> Logout();
     }
 }

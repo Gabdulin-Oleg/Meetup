@@ -49,9 +49,10 @@ namespace Meetup.Services
 
         public async Task<IActionResult> LoginAsync(LoginViewModel model)
         {
-            var isAdmin = await userManager.FindByEmailAsync(model.Email);
-            if (await userManager.IsInRoleAsync((isAdmin), "admin"))
+            var user = await userManager.FindByEmailAsync(model.Email);
+            if (await userManager.IsInRoleAsync((user), "admin"))
             {
+                await signInManager.SignInAsync(user, false);
                 return RedirectToAction("Get", "Admin");
             }
             else
@@ -59,6 +60,7 @@ namespace Meetup.Services
                 var result = await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
                 if (result.Succeeded)
                 {
+                    await signInManager.SignInAsync(user, false);
                     return RedirectToAction("Get", "User");
                 }
                 else
@@ -66,6 +68,12 @@ namespace Meetup.Services
                     return Unauthorized();
                 }
             }
+        }
+        public async Task<IActionResult> Logout()
+        {
+            // удаляем аутентификационные куки
+            await signInManager.SignOutAsync();
+            return RedirectToAction("Get", "User");
         }
     }
 }
