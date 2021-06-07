@@ -35,6 +35,7 @@ namespace Meetup
             });
             services.AddScoped<IAdminService, AdminService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IEmailSender, MailKitEmailSender>();
             services.AddIdentity<ApplicationUser, IdentityRole>(opt =>
             {
                 opt.Password.RequireNonAlphanumeric = false;
@@ -42,7 +43,10 @@ namespace Meetup
                 opt.Password.RequireUppercase = false;
                 opt.Password.RequireLowercase = false;
             })
-                .AddEntityFrameworkStores<Identity>();
+                .AddEntityFrameworkStores<Identity>()
+                .AddTokenProvider<DataProtectorTokenProvider<ApplicationUser>>(TokenOptions.DefaultProvider);
+            services.Configure<EmailOptions>(Configuration.GetSection("EmailOptions"));
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
