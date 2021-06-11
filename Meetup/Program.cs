@@ -1,13 +1,18 @@
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Threading.Tasks;
 
 namespace Meetup
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            var host = CreateHostBuilder(args).Build();//.Run();
+            using var scope = host.Services.CreateScope();
+            await SeedData(scope);
+            await host.RunAsync();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
@@ -15,6 +20,13 @@ namespace Meetup
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+     
                 });
+
+        private static async Task SeedData(IServiceScope serviceScope)
+        {
+            DataSeet dataSeet = serviceScope.ServiceProvider.GetRequiredService<DataSeet>();
+            await dataSeet.SeedData();
+        }
     }
 }

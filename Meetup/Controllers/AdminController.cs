@@ -18,14 +18,14 @@ namespace Meetup.Controllers
             this.adminService = adminService;
         }
 
-        [HttpGet("admin/Users")]
+        [HttpGet("Users")]
         public IActionResult GetAllUser()
         {
             var result = adminService.GetAllUsers();
             return Ok(result);
         }
 
-        [HttpGet("admin/User/{id}")]
+        [HttpGet("User/{id}")]
         public IActionResult GetUserById(int id)
         {
             var result = adminService.GetUserById(id);

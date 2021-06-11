@@ -46,15 +46,13 @@ namespace Meetup.Controllers
         {
             var user = mapper.Map<User>(model);
             ApplicationUser applicationUser = new ApplicationUser { Email = user.Email, UserName = user.Email };
-           var result = await userManager.CreateAsync(applicationUser, user.Password);
-
+            var result = await userManager.CreateAsync(applicationUser, user.Password);
             if (result.Succeeded)
             {
                 var code = await userManager.GenerateEmailConfirmationTokenAsync(applicationUser);
-                var callbackUrl = Url.Action(
-                    "ConfirmEmail",
-                    "Meetup",
-                  new { userId = applicationUser.Id, code = code }, HttpContext.Request.Scheme,host: HttpContext.Request.Host.Value);//, host: "192.168.4.154:5001") ;
+                var callbackUrl = Url.Action("ConfirmEmail","Meetup",
+                  new { userId = applicationUser.Id, code = code }, HttpContext.Request.Scheme,host: HttpContext.Request.Host.Value);
+
                 await emailService.SendEmailAsync(model.Email, "Confirm your account",
                     $"Подтвердите регистрацию, перейдя по ссылке: <a href='{callbackUrl}'>link</a>");
 
@@ -65,27 +63,31 @@ namespace Meetup.Controllers
                 return RedirectToAction("Get", "Meetup");
             }
             await userManager.DeleteAsync(applicationUser);
-            return Unauthorized();
+            return BadRequest("Пользователь с таким Email уже сушествует");
         }
 
         [HttpPost("Login")]
         public async Task<IActionResult> LoginAsync(LoginViewModel model)
         {
-            var user = await userManager.FindByNameAsync(model.Email);
+            var user = await userManager.FindByEmailAsync(model.Email);
             if (user != null)
             {
                 // проверяем, подтвержден ли email
                 if (!await userManager.IsEmailConfirmedAsync(user))
                 {
-                    ModelState.AddModelError(string.Empty, "Вы не подтвердили свой email");
-                    return Unauthorized(model);
+                    return BadRequest("Вы не подтвердили свой email");
                 }
+
             }
 
             var result = await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
             if (result.Succeeded)
             {
-                await signInManager.SignInAsync(user, false);
+                if (await userManager.IsInRoleAsync(user,"admin"))
+                {
+                    // перенаправляем на админку если это админ
+                    return RedirectToAction("GetAllUser", "Admin");
+                }
                 return RedirectToAction("Get", "Meetup");
             }
             else

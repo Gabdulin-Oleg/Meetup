@@ -1,4 +1,4 @@
-﻿namespace Meetup.Services
+﻿namespace Meetup.ApplicationDbContext.Model
 {
     public class EmailOptions
     {
@@ -9,5 +9,5 @@
         public string Password { get; set; }
     }
 
-    
+
 }

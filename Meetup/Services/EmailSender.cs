@@ -1,4 +1,5 @@
 ﻿using MailKit.Net.Smtp;
+using Meetup.ApplicationDbContext.Model;
 using Meetup.Services.Interfaces;
 using Microsoft.Extensions.Options;
 using MimeKit;
@@ -30,7 +31,6 @@ namespace Meetup.Services
             mimeMessage.From.Add(MailboxAddress.Parse(options.Sender));
             mimeMessage.To.Add(MailboxAddress.Parse(email));
             mimeMessage.Subject = subject;
-
 
             return mimeMessage;
         }

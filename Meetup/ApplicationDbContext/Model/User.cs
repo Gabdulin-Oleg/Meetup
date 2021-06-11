@@ -21,6 +21,10 @@ namespace Meetup.ApplicationDbContext.Model
         /// </summary>
         public string MiddleName { get; set; }
         /// <summary>
+        /// Возраст
+        /// </summary>
+        public int Age { get; set; }
+        /// <summary>
         /// Email
         /// </summary>
         public string Email { get; set; }

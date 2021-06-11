@@ -25,9 +25,15 @@ namespace Meetup.ViewModels
         /// </summary>
         public string MiddleName { get; set; }
         /// <summary>
+        /// Возраст
+        /// </summary>
+        [Required]
+        public int Age { get; set; }
+        /// <summary>
         /// Email
         /// </summary>
         [Required]
+        [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
         /// <summary>
         /// пароль

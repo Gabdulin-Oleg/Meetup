@@ -3,7 +3,7 @@
     public enum WorkStatus
     {
         /// <summary>
-        /// усть работа
+        /// есть работа
         /// </summary>
         Work,
         /// <summary>

@@ -34,8 +34,7 @@ namespace Meetup
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Meetup", Version = "v1" });
             });
             services.AddScoped<IAdminService, AdminService>();
-            services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IEmailSender, MailKitEmailSender>();
+            services.AddScoped<IEmailSender, EmailSender>();
             services.AddIdentity<ApplicationUser, IdentityRole>(opt =>
             {
                 opt.Password.RequireNonAlphanumeric = false;
@@ -46,6 +45,8 @@ namespace Meetup
                 .AddEntityFrameworkStores<Identity>()
                 .AddTokenProvider<DataProtectorTokenProvider<ApplicationUser>>(TokenOptions.DefaultProvider);
             services.Configure<EmailOptions>(Configuration.GetSection("EmailOptions"));
+            services.Configure<AdminOption>(Configuration.GetSection("Admin"));
+            services.AddScoped<DataSeet>();
 
         }
 
