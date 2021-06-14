@@ -41,7 +41,7 @@ namespace Meetup.Controllers
             return Ok();
         }
 
-        [HttpPost]
+        [HttpPost("Register")]
         public async Task<IActionResult> Register(RegistredViewModel model)
         {
             var user = mapper.Map<User>(model);
@@ -54,7 +54,7 @@ namespace Meetup.Controllers
                   new { userId = applicationUser.Id, code = code }, HttpContext.Request.Scheme,host: HttpContext.Request.Host.Value);
 
                 await emailService.SendEmailAsync(model.Email, "Confirm your account",
-                    $"Подтвердите регистрацию, перейдя по ссылке: <a href='{callbackUrl}'>link</a>");
+                    $"Подтвердите регистрацию, перейдя по <a href='{callbackUrl}'>ссылке</a>");
 
                 await dbContext.Set<User>().AddAsync(user);
                 await dbContext.SaveChangesAsync();

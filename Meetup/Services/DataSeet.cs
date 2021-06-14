@@ -1,37 +1,35 @@
 ﻿using Meetup.ApplicationDbContext.Model;
-using Meetup.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Meetup
 {
-    public class DataSeet 
+    public class DataSeet
     {
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly RoleManager<IdentityRole> roleManager;
         AdminOption adminOption;
 
-        public DataSeet(IOptions<AdminOption> options, UserManager<ApplicationUser> userManager)
+        public DataSeet(IOptions<AdminOption> options, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             adminOption = options.Value;
             this.userManager = userManager;
+            this.roleManager = roleManager;
         }
         public async Task SeedData()
         {
-            
+
             ApplicationUser applicationUser = new ApplicationUser()
             {
                 UserName = adminOption.UserName,
                 Email = adminOption.Email,
                 EmailConfirmed = true
             };
-            
-                await userManager.CreateAsync(applicationUser, adminOption.Password);
-                await userManager.AddToRoleAsync(applicationUser, "admin");
-            
+            await roleManager.CreateAsync(new IdentityRole(adminOption.Role));
+            await userManager.CreateAsync(applicationUser, adminOption.Password);
+            await userManager.AddToRoleAsync(applicationUser, adminOption.Role);
+
 
         }
     }
@@ -41,5 +39,6 @@ namespace Meetup
         public string UserName { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
+        public string Role { get; set; }
     }
 }

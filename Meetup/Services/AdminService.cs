@@ -22,7 +22,9 @@ namespace Meetup.Services
 
         public User GetUserById(int id)
         {
-            return dbContext.Set<User>().FirstOrDefault(p => p.Id == id);
+            var user = dbContext.Set<User>().FirstOrDefault(p => p.Id == id);
+            user.Language = dbContext.Set<Language>().Where(p => p.UserId == user.Id).ToArray();
+            return user;
         }
     }
 }

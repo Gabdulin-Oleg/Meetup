@@ -47,7 +47,7 @@ namespace Meetup.ApplicationDbContext.Model
         /// <summary>
         /// Какими языками владеет
         /// </summary>
-        public IEnumerable<Language> Language { get; set; }
+        public ICollection<Language> Language { get; set; }
         /// <summary>
         /// дополнительная иформация
         /// </summary>
