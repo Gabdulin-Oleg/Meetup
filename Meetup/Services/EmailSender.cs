@@ -1,6 +1,6 @@
 ﻿using MailKit.Net.Smtp;
-using Meetup.ApplicationDbContext.Model;
-using Meetup.Services.Interfaces;
+using Meetup.Interfaces;
+using Meetup.Services.Options;
 using Microsoft.Extensions.Options;
 using MimeKit;
 using System.Threading.Tasks;

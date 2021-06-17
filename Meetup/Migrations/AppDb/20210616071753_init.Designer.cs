@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Meetup.Migrations.AppDb
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20210611115720_addAge")]
-    partial class addAge
+    [Migration("20210616071753_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -41,6 +41,30 @@ namespace Meetup.Migrations.AppDb
                     b.ToTable("Language");
                 });
 
+            modelBuilder.Entity("Meetup.ApplicationDbContext.Model.Meetups", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<byte[]>("Imgs")
+                        .HasColumnType("bytea");
+
+                    b.Property<string>("Topic")
+                        .HasColumnType("text");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Meetups");
+                });
+
             modelBuilder.Entity("Meetup.ApplicationDbContext.Model.User", b =>
                 {
                     b.Property<int>("Id")
@@ -66,9 +90,6 @@ namespace Meetup.Migrations.AppDb
                     b.Property<string>("MiddleName")
                         .HasColumnType("text");
 
-                    b.Property<string>("Password")
-                        .HasColumnType("text");
-
                     b.Property<string>("Post")
                         .HasColumnType("text");
 
@@ -86,11 +107,43 @@ namespace Meetup.Migrations.AppDb
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("MeetupsUser", b =>
+                {
+                    b.Property<int>("MeetupsId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("UsersId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("MeetupsId", "UsersId");
+
+                    b.HasIndex("UsersId");
+
+                    b.ToTable("MeetupsUser");
+                });
+
             modelBuilder.Entity("Meetup.ApplicationDbContext.Model.Language", b =>
                 {
-                    b.HasOne("Meetup.ApplicationDbContext.Model.User", null)
+                    b.HasOne("Meetup.ApplicationDbContext.Model.User", "User")
                         .WithMany("Language")
                         .HasForeignKey("UserId");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("MeetupsUser", b =>
+                {
+                    b.HasOne("Meetup.ApplicationDbContext.Model.Meetups", null)
+                        .WithMany()
+                        .HasForeignKey("MeetupsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Meetup.ApplicationDbContext.Model.User", null)
+                        .WithMany()
+                        .HasForeignKey("UsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Meetup.ApplicationDbContext.Model.User", b =>

@@ -1,7 +1,9 @@
 ﻿using Meetup.ApplicationDbContext.Model;
+using Meetup.ViewModels;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
-namespace Meetup.Services.Interfaces
+namespace Meetup.Interfaces
 {
     public interface IAdminService
     {
@@ -9,12 +11,13 @@ namespace Meetup.Services.Interfaces
         /// получение всех пользователей
         /// </summary>
         /// <returns>коллекция пользователей</returns>
-        ICollection<User> GetAllUsers();
+        Task<ICollection<User>> GetAllUsersAsync();
         /// <summary>
         /// получить пользвателя по Id
         /// </summary>
         /// <param name="id"></param>
         /// <returns>пользователь</returns>
-        User GetUserById(int id);
+        Task<User> GetUserByIdAsync(int id);
+        Task<ICollection<UserViewModel>> GetUsersInMeetupAsync(int id);
     }
 }

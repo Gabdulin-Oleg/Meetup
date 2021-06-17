@@ -1,4 +1,4 @@
-﻿namespace Meetup.ApplicationDbContext.Model
+﻿namespace Meetup.Services.Options
 {
     public class EmailOptions
     {

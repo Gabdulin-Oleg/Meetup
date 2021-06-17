@@ -1,29 +1,41 @@
-﻿using Meetup.ApplicationDbContext;
+﻿using AutoMapper;
+using Meetup.ApplicationDbContext;
 using Meetup.ApplicationDbContext.Model;
-using Meetup.Services.Interfaces;
+using Meetup.Interfaces;
+using Meetup.ViewModels;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Meetup.Services
 {
     public class AdminService : IAdminService
     {
-        AppDbContext dbContext;
+        readonly AppDbContext dbContext;
+        readonly IMapper mapper;
 
-        public AdminService(AppDbContext dbContext)
+        public AdminService(AppDbContext dbContext, IMapper mapper)
         {
             this.dbContext = dbContext;
+            this.mapper = mapper;
         }
 
-        public ICollection<User> GetAllUsers()
+        public async Task<ICollection<UserViewModel>> GetUsersInMeetupAsync(int id)
         {
-            return dbContext.Set<User>().ToArray();
+            var users = await dbContext.Meetups.Include(p => p.Users).FirstOrDefaultAsync(p => p.Id == id);
+
+            return mapper.Map<ICollection<UserViewModel>>(users.Users);
         }
 
-        public User GetUserById(int id)
+        public async Task<ICollection<User>> GetAllUsersAsync()
+        { 
+            return await dbContext.Set<User>().ToListAsync();
+        }
+
+        public async Task<User> GetUserByIdAsync(int id)
         {
-            var user = dbContext.Set<User>().FirstOrDefault(p => p.Id == id);
-            user.Language = dbContext.Set<Language>().Where(p => p.UserId == user.Id).ToArray();
+            var user = await dbContext.Users.Include(p => p.Language).FirstOrDefaultAsync(p => p.Id == id);
             return user;
         }
     }

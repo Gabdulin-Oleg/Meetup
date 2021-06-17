@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Meetup.Services.Interfaces
+namespace Meetup.Interfaces
 {
     public interface IEmailSender
     {

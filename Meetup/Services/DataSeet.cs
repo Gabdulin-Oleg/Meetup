@@ -1,5 +1,9 @@
-﻿using Meetup.ApplicationDbContext.Model;
+﻿using Meetup.ApplicationDbContext;
+using Meetup.ApplicationDbContext.Model;
+using Meetup.Services.Options;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System.Threading.Tasks;
 
@@ -7,18 +11,24 @@ namespace Meetup
 {
     public class DataSeet
     {
+        private readonly AppDbContext dbContext;
+        private readonly Identity identityDbContext;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly RoleManager<IdentityRole> roleManager;
         AdminOption adminOption;
 
-        public DataSeet(IOptions<AdminOption> options, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+        public DataSeet(IOptions<AdminOption> options, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, AppDbContext dbContext, Identity identityDbContext)
         {
             adminOption = options.Value;
             this.userManager = userManager;
             this.roleManager = roleManager;
+            this.dbContext = dbContext;
+            this.identityDbContext = identityDbContext;
         }
         public async Task SeedData()
         {
+            await dbContext.Database.MigrateAsync();
+            await identityDbContext.Database.MigrateAsync();
 
             ApplicationUser applicationUser = new ApplicationUser()
             {
@@ -29,16 +39,11 @@ namespace Meetup
             await roleManager.CreateAsync(new IdentityRole(adminOption.Role));
             await userManager.CreateAsync(applicationUser, adminOption.Password);
             await userManager.AddToRoleAsync(applicationUser, adminOption.Role);
-
-
+            if(await dbContext.Meetups.FirstOrDefaultAsync(p=>p.Id == 1) == null)
+            {
+                await dbContext.Set<Meetups>().AddAsync(new Meetups { Id = 1 });
+                await dbContext.SaveChangesAsync();
+            }
         }
-    }
-
-    public class AdminOption
-    {
-        public string UserName { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
-        public string Role { get; set; }
     }
 }

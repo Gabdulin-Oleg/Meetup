@@ -1,4 +1,4 @@
-﻿namespace Meetup.ApplicationDbContext.Model
+﻿namespace Meetup.ApplicationDbContext.Model.Enums
 {
     public enum WorkStatus
     {

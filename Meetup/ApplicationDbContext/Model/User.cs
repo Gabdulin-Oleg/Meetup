@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Meetup.ApplicationDbContext.Model.Enums;
+using System.Collections.Generic;
 
 namespace Meetup.ApplicationDbContext.Model
 {
@@ -29,10 +30,6 @@ namespace Meetup.ApplicationDbContext.Model
         /// </summary>
         public string Email { get; set; }
         /// <summary>
-        /// Пароль
-        /// </summary>
-        public string Password { get; set; }
-        /// <summary>
         /// есть ли работа
         /// </summary>
         public WorkStatus Work { get; set; }
@@ -52,5 +49,11 @@ namespace Meetup.ApplicationDbContext.Model
         /// дополнительная иформация
         /// </summary>
         public string AdditionalInformation { get; set; }
+
+        public ICollection<Meetups> Meetups { get; set; }
+        public User()
+        {
+            Meetups = new List<Meetups>();
+        }
     }
 }

@@ -1,15 +1,21 @@
+using AspNetCore.IServiceCollection.AddIUrlHelper;
 using Meetup.ApplicationDbContext;
 using Meetup.ApplicationDbContext.Model;
+using Meetup.Interfaces;
 using Meetup.Services;
-using Meetup.Services.Interfaces;
+using Meetup.Services.Options;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using System.Reflection;
 
 namespace Meetup
 {
@@ -25,16 +31,20 @@ namespace Meetup
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
+            services.AddUrlHelper();
+            services.AddHttpContextAccessor();
             services.AddDbContext<Identity>((sp, option) => option.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
             services.AddDbContext<AppDbContext>((sp, option) => option.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllersWithViews();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Meetup", Version = "v1" });
             });
             services.AddScoped<IAdminService, AdminService>();
             services.AddScoped<IEmailSender, EmailSender>();
+            services.AddScoped<IUserService, UserService>();
             services.AddIdentity<ApplicationUser, IdentityRole>(opt =>
             {
                 opt.Password.RequireNonAlphanumeric = false;
@@ -47,7 +57,7 @@ namespace Meetup
             services.Configure<EmailOptions>(Configuration.GetSection("EmailOptions"));
             services.Configure<AdminOption>(Configuration.GetSection("Admin"));
             services.AddScoped<DataSeet>();
-
+            services.AddRazorPages().AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
