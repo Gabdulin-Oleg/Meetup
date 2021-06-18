@@ -1,14 +1,19 @@
 ﻿using Meetup.ApplicationDbContext.Model.Enums;
+using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Meetup.ApplicationDbContext.Model
+namespace Meetup.ViewModels
 {
-    public class Meetups
+    public class MeetupViewModel
     {
         /// <summary>
         /// ID
         /// </summary>
-        public string Id { get; set; }
+        public int Id { get; set; }
         /// <summary>
         /// Тип Метапа
         /// </summary>
@@ -24,13 +29,6 @@ namespace Meetup.ApplicationDbContext.Model
         /// <summary>
         /// Картинки
         /// </summary>
-        public byte[] Images { get; set; }
-
-
-        public ICollection<User> Users { get; set; }
-        public Meetups()
-        {
-            Users = new List<User>();
-        }
+        public IFormFile Images { get; set; }
     }
 }

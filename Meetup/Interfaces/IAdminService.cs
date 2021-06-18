@@ -17,7 +17,12 @@ namespace Meetup.Interfaces
         /// </summary>
         /// <param name="id"></param>
         /// <returns>пользователь</returns>
-        Task<User> GetUserByIdAsync(int id);
-        Task<ICollection<UserViewModel>> GetUsersInMeetupAsync(int id);
+        Task<User> GetUserByIdAsync(string id);
+        /// <summary>
+        /// Получить всех пользлвателей в метапе
+        /// </summary>
+        /// <param name="id">ID Meetup</param>
+        /// <returns>Users</returns>
+        Task<ICollection<UserViewModel>> GetUsersInMeetupAsync(string id);
     }
 }

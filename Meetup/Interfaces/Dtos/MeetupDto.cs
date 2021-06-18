@@ -1,10 +1,6 @@
 ﻿using Meetup.ApplicationDbContext.Model;
 using Meetup.ApplicationDbContext.Model.Enums;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Meetup.Interfaces.Dtos
 {
@@ -13,7 +9,7 @@ namespace Meetup.Interfaces.Dtos
         /// <summary>
         /// ID
         /// </summary>
-        public int Id { get; set; }
+        public string Id { get; set; }
         /// <summary>
         /// Тип Метапа
         /// </summary>

@@ -2,7 +2,6 @@
 using Meetup.ApplicationDbContext.Model;
 using Meetup.Services.Options;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System.Threading.Tasks;
@@ -39,9 +38,9 @@ namespace Meetup
             await roleManager.CreateAsync(new IdentityRole(adminOption.Role));
             await userManager.CreateAsync(applicationUser, adminOption.Password);
             await userManager.AddToRoleAsync(applicationUser, adminOption.Role);
-            if(await dbContext.Meetups.FirstOrDefaultAsync(p=>p.Id == 1) == null)
+            if (await dbContext.Meetups.FirstOrDefaultAsync(p => p.Id == "1") == null)
             {
-                await dbContext.Set<Meetups>().AddAsync(new Meetups { Id = 1 });
+                await dbContext.Set<Meetups>().AddAsync(new Meetups { Id = "1" });
                 await dbContext.SaveChangesAsync();
             }
         }

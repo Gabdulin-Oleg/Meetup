@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Meetup.Migrations.AppDb
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20210616071753_init")]
+    [Migration("20210618072102_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,7 +23,7 @@ namespace Meetup.Migrations.AppDb
 
             modelBuilder.Entity("Meetup.ApplicationDbContext.Model.Language", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
@@ -34,24 +34,25 @@ namespace Meetup.Migrations.AppDb
                     b.Property<int?>("UserId")
                         .HasColumnType("integer");
 
-                    b.HasKey("id");
+                    b.Property<string>("UserId1")
+                        .HasColumnType("text");
 
-                    b.HasIndex("UserId");
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId1");
 
                     b.ToTable("Language");
                 });
 
             modelBuilder.Entity("Meetup.ApplicationDbContext.Model.Meetups", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
 
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
-                    b.Property<byte[]>("Imgs")
+                    b.Property<byte[]>("Images")
                         .HasColumnType("bytea");
 
                     b.Property<string>("Topic")
@@ -67,10 +68,8 @@ namespace Meetup.Migrations.AppDb
 
             modelBuilder.Entity("Meetup.ApplicationDbContext.Model.User", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
 
                     b.Property<string>("AdditionalInformation")
                         .HasColumnType("text");
@@ -88,6 +87,9 @@ namespace Meetup.Migrations.AppDb
                         .HasColumnType("text");
 
                     b.Property<string>("MiddleName")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Phone")
                         .HasColumnType("text");
 
                     b.Property<string>("Post")
@@ -109,11 +111,11 @@ namespace Meetup.Migrations.AppDb
 
             modelBuilder.Entity("MeetupsUser", b =>
                 {
-                    b.Property<int>("MeetupsId")
-                        .HasColumnType("integer");
+                    b.Property<string>("MeetupsId")
+                        .HasColumnType("text");
 
-                    b.Property<int>("UsersId")
-                        .HasColumnType("integer");
+                    b.Property<string>("UsersId")
+                        .HasColumnType("text");
 
                     b.HasKey("MeetupsId", "UsersId");
 
@@ -124,11 +126,9 @@ namespace Meetup.Migrations.AppDb
 
             modelBuilder.Entity("Meetup.ApplicationDbContext.Model.Language", b =>
                 {
-                    b.HasOne("Meetup.ApplicationDbContext.Model.User", "User")
+                    b.HasOne("Meetup.ApplicationDbContext.Model.User", null)
                         .WithMany("Language")
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("User");
+                        .HasForeignKey("UserId1");
                 });
 
             modelBuilder.Entity("MeetupsUser", b =>

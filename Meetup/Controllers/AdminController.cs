@@ -1,9 +1,6 @@
-﻿using AutoMapper;
-using Meetup.Interfaces;
-using Meetup.ViewModels;
+﻿using Meetup.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -16,16 +13,16 @@ namespace Meetup.Controllers
     public class AdminController : ControllerBase
     {
         readonly IAdminService adminService;
-        readonly IMapper mapper;
 
-        public AdminController(IAdminService adminService, IMapper mapper)
+        public AdminController(IAdminService adminService)
         {
             this.adminService = adminService;
-            this.mapper = mapper;
         }
 
+
+
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetUsersInMeetupAsync(int id)
+        public async Task<IActionResult> GetUsersInMeetupAsync(string id)
         {
             var result = await adminService.GetUsersInMeetupAsync(id);
             return Ok(result);
@@ -39,7 +36,7 @@ namespace Meetup.Controllers
         }
 
         [HttpGet("User/{id}")]
-        public async Task<IActionResult> GetUserByIdAsync(int id)
+        public async Task<IActionResult> GetUserByIdAsync(string id)
         {
             var result = await adminService.GetUserByIdAsync(id);
             return Ok(result);

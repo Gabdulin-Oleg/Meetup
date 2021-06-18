@@ -5,7 +5,6 @@ using Meetup.Interfaces;
 using Meetup.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Meetup.Services
@@ -21,7 +20,7 @@ namespace Meetup.Services
             this.mapper = mapper;
         }
 
-        public async Task<ICollection<UserViewModel>> GetUsersInMeetupAsync(int id)
+        public async Task<ICollection<UserViewModel>> GetUsersInMeetupAsync(string id)
         {
             var users = await dbContext.Meetups.Include(p => p.Users).FirstOrDefaultAsync(p => p.Id == id);
 
@@ -29,11 +28,11 @@ namespace Meetup.Services
         }
 
         public async Task<ICollection<User>> GetAllUsersAsync()
-        { 
-            return await dbContext.Set<User>().ToListAsync();
+        {
+            return await dbContext.Users.Include(p => p.Language).ToListAsync();
         }
 
-        public async Task<User> GetUserByIdAsync(int id)
+        public async Task<User> GetUserByIdAsync(string id)
         {
             var user = await dbContext.Users.Include(p => p.Language).FirstOrDefaultAsync(p => p.Id == id);
             return user;

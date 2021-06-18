@@ -2,11 +2,6 @@
 using Meetup.ApplicationDbContext.Model;
 using Meetup.Interfaces.Dtos;
 using Meetup.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Meetup.ApplicationDbContext.MappingProfile
 {

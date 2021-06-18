@@ -8,7 +8,7 @@ namespace Meetup.ApplicationDbContext.Model
         /// <summary>
         /// ID
         /// </summary>
-        public int Id { get; set; }
+        public string Id { get; set; }
         /// <summary>
         /// Имя
         /// </summary>
@@ -33,6 +33,10 @@ namespace Meetup.ApplicationDbContext.Model
         /// есть ли работа
         /// </summary>
         public WorkStatus Work { get; set; }
+        /// <summary>
+        /// номер телефона
+        /// </summary>
+        public string Phone { get; set; }
         /// <summary>
         /// Опыт работы
         /// </summary>

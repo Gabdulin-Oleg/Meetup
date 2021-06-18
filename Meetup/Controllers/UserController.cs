@@ -6,6 +6,7 @@ using Meetup.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace Meetup.Controllers
@@ -72,16 +73,24 @@ namespace Meetup.Controllers
             }
         }
 
+        [HttpPost("CreateMeetup")]
+        [Authorize]
+        public async Task<IActionResult> CreateMeetup([FromForm] MeetupViewModel meetupViewModel)
+        {
+            var meetupDto = mapper.Map<MeetupDto>(meetupViewModel);
+            Stream steam = meetupViewModel.Images.OpenReadStream();
 
-        //[HttpPost("SignUpMeetup")]
-        //[Authorize]
-        //public async Task<IActionResult> SignUpMeetup(int meetupId)
-        //{
-        //    var appUser = await userManager.FindByEmailAsync(signInManager.Context.User.Identity.Name);
-        //    var meetup = dbContext.Meetups.FirstOrDefault(p => p.Id == meetupId);
-        //    dbContext.Set<User>().FirstOrDefault(p => p.Email == appUser.Email).Meetups.Add(meetup);
-        //    return NoContent();
-        //}
+            await userService.CreateMeetup(meetupDto, steam);
+            return NoContent();
+        }
+
+        [HttpPost("SignUpMeetup")]
+        [Authorize]
+        public async Task<IActionResult> SignUpMeetup(string meetupId)
+        {
+            await userService.SignUpMeetup(meetupId);
+            return NoContent();
+        }
 
         [HttpPost("Logout")]
         public async Task<IActionResult> Logout()
