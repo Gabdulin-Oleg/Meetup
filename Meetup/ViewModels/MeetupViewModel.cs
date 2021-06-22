@@ -1,10 +1,6 @@
 ﻿using Meetup.ApplicationDbContext.Model.Enums;
 using Microsoft.AspNetCore.Http;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Meetup.ViewModels
 {
@@ -13,7 +9,7 @@ namespace Meetup.ViewModels
         /// <summary>
         /// ID
         /// </summary>
-        public int Id { get; set; }
+        public string Id { get; set; }
         /// <summary>
         /// Тип Метапа
         /// </summary>
@@ -30,5 +26,11 @@ namespace Meetup.ViewModels
         /// Картинки
         /// </summary>
         public IFormFile Images { get; set; }
+        /// <summary>
+        /// Продолжительнрсть метапа
+        /// </summary>
+        public double DurationMeetup { get; set; }
+
+        public string meetupLocationId { get; set; }
     }
 }

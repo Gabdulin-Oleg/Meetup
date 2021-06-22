@@ -1,5 +1,5 @@
 ﻿using Meetup.Interfaces.Dtos;
-using System.IO;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Meetup.Interfaces
@@ -25,6 +25,23 @@ namespace Meetup.Interfaces
         /// <param name="meetupId"></param>
         /// <returns></returns>
         Task SignUpMeetup(string meetupId);
-        Task CreateMeetup(MeetupDto meetupDto, Stream stream);
+        /// <summary>
+        /// Создать Метап
+        /// </summary>
+        /// <param name="meetupDto"></param>
+        /// <param name="meetupLocationId"></param>
+        /// <returns></returns>
+        Task<bool> CreateMeetup(MeetupDto meetupDto);
+        /// <summary>
+        /// Получить все места метапа
+        /// </summary>
+        /// <returns></returns>
+        Task<ICollection<MeetupLocationDto>> GetAllMeetupLocationAsync();
+        /// <summary>
+        /// получить место метапа по ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Task<MeetupLocationDto> GetMeetupLocationByIdAsync(string id);
     }
 }

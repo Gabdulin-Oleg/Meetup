@@ -6,7 +6,6 @@ using Meetup.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.IO;
 using System.Threading.Tasks;
 
 namespace Meetup.Controllers
@@ -39,7 +38,7 @@ namespace Meetup.Controllers
         public async Task<IActionResult> Register(RegistredViewModel model)
         {
             var userDto = mapper.Map<UserDto>(model);
-            
+
             if (await userService.RegistrationAsync(userDto))
                 return RedirectToAction("Get", "User");
 
@@ -51,12 +50,12 @@ namespace Meetup.Controllers
         {
             var user = await userManager.FindByEmailAsync(model.Email);
 
-            if (user != null)
-            {
-                // проверяем, подтвержден ли email
-                if (!await userManager.IsEmailConfirmedAsync(user))
-                    return BadRequest("Вы не подтвердили свой email");
-            }
+            //if (user != null)
+            //{
+            //    // проверяем, подтвержден ли email
+            //    if (!await userManager.IsEmailConfirmedAsync(user))
+            //        return BadRequest("Вы не подтвердили свой email");
+            //}
             var result = await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
             if (result.Succeeded)
             {
@@ -73,15 +72,13 @@ namespace Meetup.Controllers
             }
         }
 
-        [HttpPost("CreateMeetup")]
-        [Authorize]
-        public async Task<IActionResult> CreateMeetup([FromForm] MeetupViewModel meetupViewModel)
-        {
-            var meetupDto = mapper.Map<MeetupDto>(meetupViewModel);
-            Stream steam = meetupViewModel.Images.OpenReadStream();
 
-            await userService.CreateMeetup(meetupDto, steam);
-            return NoContent();
+        [HttpPost("Logout")]
+        public async Task<IActionResult> Logout()
+        {
+            // удаляем аутентификационные куки
+            await signInManager.SignOutAsync();
+            return RedirectToAction("Get", "User");
         }
 
         [HttpPost("SignUpMeetup")]
@@ -92,12 +89,14 @@ namespace Meetup.Controllers
             return NoContent();
         }
 
-        [HttpPost("Logout")]
-        public async Task<IActionResult> Logout()
+        [HttpPost("CreateMeetup")]
+        [Authorize]
+        public async Task<IActionResult> CreateMeetup([FromForm] MeetupViewModel meetupViewModel)
         {
-            // удаляем аутентификационные куки
-            await signInManager.SignOutAsync();
-            return RedirectToAction("Get", "User");
+            var meetupDto = mapper.Map<MeetupDto>(meetupViewModel);
+
+            await userService.CreateMeetup(meetupDto);
+            return NoContent();
         }
 
         [HttpGet("ConfirmEmail")]
@@ -107,6 +106,22 @@ namespace Meetup.Controllers
             if (!await userService.ConfirmationEmail(userId, code))
                 return RedirectToAction("Get", "User");
             return BadRequest();
+        }
+
+        [HttpGet("GetMeetupLocationById")]
+        [Authorize]
+        public async Task<IActionResult> GetMeetupLocationById(string id)
+        {
+            var result = await userService.GetMeetupLocationByIdAsync(id);
+            return Ok(result);
+        }
+
+        [HttpGet("GetAllMeetupLocation")]
+        [Authorize]
+        public async Task<IActionResult> GetAllMeetupLocation()
+        {
+            var result = await userService.GetAllMeetupLocationAsync();
+            return Ok(result);
         }
     }
 }

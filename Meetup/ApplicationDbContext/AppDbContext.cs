@@ -7,7 +7,7 @@ namespace Meetup.ApplicationDbContext
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Meetups> Meetups { get; set; }
-
+        public DbSet<MeetupLocation> MeetupLocations { get; set; }
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }

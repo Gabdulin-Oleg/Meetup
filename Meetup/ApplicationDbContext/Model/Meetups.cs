@@ -1,5 +1,6 @@
 ﻿using Meetup.ApplicationDbContext.Model.Enums;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Meetup.ApplicationDbContext.Model
 {
@@ -25,7 +26,18 @@ namespace Meetup.ApplicationDbContext.Model
         /// Картинки
         /// </summary>
         public byte[] Images { get; set; }
+        /// <summary>
+        /// Продолжительнрсть метапа
+        /// </summary>
+        public double DurationMeetup { get; set; }
+        /// <summary>
+        /// Выступающий
+        /// </summary>
+        [NotMapped]
+        public User Speaker { get; set; }
 
+        public string MeetupLocationId { get; set; }
+        public MeetupLocation MeetupLocation { get; set; }
 
         public ICollection<User> Users { get; set; }
         public Meetups()

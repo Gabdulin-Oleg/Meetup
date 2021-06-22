@@ -2,11 +2,6 @@
 using Meetup.ApplicationDbContext.Model;
 using Meetup.Interfaces.Dtos;
 using Meetup.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Meetup.ApplicationDbContext.MappingProfile
 {
@@ -14,11 +9,15 @@ namespace Meetup.ApplicationDbContext.MappingProfile
     {
         public MeetupMappingProfile()
         {
+            CreateMap<Meetups, MeetupViewModel>();
+                //.ForMember(p => p.Images, p => p.Ignore());
+            CreateMap<MeetupViewModel, Meetups>()
+                .ForMember(p => p.Images, p => p.Ignore());
+
             CreateMap<Meetups, MeetupDto>();
             CreateMap<MeetupDto, Meetups>();
-
             CreateMap<MeetupViewModel, MeetupDto>()
-                .ForMember(p => p.Images, p => p.Ignore());
+                .ForMember(p => p.Stream, p => p.MapFrom(p => p.Images.OpenReadStream()));
         }
     }
 }

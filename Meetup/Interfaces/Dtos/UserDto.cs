@@ -55,6 +55,5 @@ namespace Meetup.Interfaces.Dtos
         /// </summary>
         public string AdditionalInformation { get; set; }
 
-        public ICollection<Meetups> Meetups { get; set; }
     }
 }

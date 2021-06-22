@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Meetup.Migrations.AppDb
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20210618072102_init")]
+    [Migration("20210621094016_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -44,6 +44,31 @@ namespace Meetup.Migrations.AppDb
                     b.ToTable("Language");
                 });
 
+            modelBuilder.Entity("Meetup.ApplicationDbContext.Model.MeetupLocation", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("EndFreeTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<bool>("IsFreeTime")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Location")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("StartFreeTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MeetupLocations");
+                });
+
             modelBuilder.Entity("Meetup.ApplicationDbContext.Model.Meetups", b =>
                 {
                     b.Property<string>("Id")
@@ -52,8 +77,14 @@ namespace Meetup.Migrations.AppDb
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
+                    b.Property<double>("DurationMeetup")
+                        .HasColumnType("double precision");
+
                     b.Property<byte[]>("Images")
                         .HasColumnType("bytea");
+
+                    b.Property<string>("MeetupLocationId")
+                        .HasColumnType("text");
 
                     b.Property<string>("Topic")
                         .HasColumnType("text");
@@ -62,6 +93,8 @@ namespace Meetup.Migrations.AppDb
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("MeetupLocationId");
 
                     b.ToTable("Meetups");
                 });
@@ -131,6 +164,15 @@ namespace Meetup.Migrations.AppDb
                         .HasForeignKey("UserId1");
                 });
 
+            modelBuilder.Entity("Meetup.ApplicationDbContext.Model.Meetups", b =>
+                {
+                    b.HasOne("Meetup.ApplicationDbContext.Model.MeetupLocation", "MeetupLocation")
+                        .WithMany("Meetups")
+                        .HasForeignKey("MeetupLocationId");
+
+                    b.Navigation("MeetupLocation");
+                });
+
             modelBuilder.Entity("MeetupsUser", b =>
                 {
                     b.HasOne("Meetup.ApplicationDbContext.Model.Meetups", null)
@@ -144,6 +186,11 @@ namespace Meetup.Migrations.AppDb
                         .HasForeignKey("UsersId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Meetup.ApplicationDbContext.Model.MeetupLocation", b =>
+                {
+                    b.Navigation("Meetups");
                 });
 
             modelBuilder.Entity("Meetup.ApplicationDbContext.Model.User", b =>

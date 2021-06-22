@@ -9,18 +9,19 @@ namespace Meetup.Migrations.AppDb
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Meetups",
+                name: "MeetupLocations",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "text", nullable: false),
-                    Type = table.Column<int>(type: "integer", nullable: false),
-                    Topic = table.Column<string>(type: "text", nullable: true),
+                    Location = table.Column<string>(type: "text", nullable: true),
                     Description = table.Column<string>(type: "text", nullable: true),
-                    Images = table.Column<byte[]>(type: "bytea", nullable: true)
+                    IsFreeTime = table.Column<bool>(type: "boolean", nullable: false),
+                    StartFreeTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    EndFreeTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Meetups", x => x.Id);
+                    table.PrimaryKey("PK_MeetupLocations", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -42,6 +43,29 @@ namespace Meetup.Migrations.AppDb
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Meetups",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "text", nullable: false),
+                    Type = table.Column<int>(type: "integer", nullable: false),
+                    Topic = table.Column<string>(type: "text", nullable: true),
+                    Description = table.Column<string>(type: "text", nullable: true),
+                    Images = table.Column<byte[]>(type: "bytea", nullable: true),
+                    DurationMeetup = table.Column<double>(type: "double precision", nullable: false),
+                    MeetupLocationId = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Meetups", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Meetups_MeetupLocations_MeetupLocationId",
+                        column: x => x.MeetupLocationId,
+                        principalTable: "MeetupLocations",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -95,6 +119,11 @@ namespace Meetup.Migrations.AppDb
                 column: "UserId1");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Meetups_MeetupLocationId",
+                table: "Meetups",
+                column: "MeetupLocationId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_MeetupsUser_UsersId",
                 table: "MeetupsUser",
                 column: "UsersId");
@@ -119,6 +148,9 @@ namespace Meetup.Migrations.AppDb
 
             migrationBuilder.DropTable(
                 name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "MeetupLocations");
         }
     }
 }

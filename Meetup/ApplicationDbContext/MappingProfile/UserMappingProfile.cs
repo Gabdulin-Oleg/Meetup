@@ -15,6 +15,9 @@ namespace Meetup.ApplicationDbContext.MappingProfile
             CreateMap<User, UserViewModel>();
             CreateMap<UserViewModel, User>();
 
+            CreateMap<UserDto, UserViewModel>();
+            CreateMap<UserViewModel, UserDto>();
+
             CreateMap<UserDto, RegistredViewModel>();
             CreateMap<RegistredViewModel, UserDto>();
 

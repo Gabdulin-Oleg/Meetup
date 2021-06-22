@@ -1,6 +1,7 @@
 ﻿using Meetup.ApplicationDbContext.Model;
 using Meetup.ApplicationDbContext.Model.Enums;
 using System.Collections.Generic;
+using System.IO;
 
 namespace Meetup.Interfaces.Dtos
 {
@@ -25,9 +26,17 @@ namespace Meetup.Interfaces.Dtos
         /// <summary>
         /// Картинки
         /// </summary>
-        public byte[] Images { get; set; }
+        public Stream Stream { get; set; }
+        /// <summary>
+        /// Продолжительнрсть метапа
+        /// </summary>
+        public double DurationMeetup { get; set; }
+
+        public User Speaker { get; set; }
+
+        public string MeetupLocationId { get; set; }
 
 
-        public ICollection<User> Users { get; set; }
+        public ICollection<UserDto> Users { get; set; }
     }
 }
