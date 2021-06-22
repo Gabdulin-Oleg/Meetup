@@ -51,8 +51,8 @@ namespace Meetup.Services
                 string callbackUrl = url.Action("ConfirmationEmail", "User",
                   new { userId = applicationUser.Id, code = code }, httpContextAccessor.HttpContext.Request.Scheme, httpContextAccessor.HttpContext.Request.Host.Value);
 
-                //await emailService.SendEmailAsync(applicationUser.Email, "Confirm your account",
-                //    $"Подтвердите регистрацию, перейдя по <a href='{callbackUrl}'>ссылке</a>");
+                await emailService.SendEmailAsync(applicationUser.Email, "Confirm your account",
+                    $"Подтвердите регистрацию, перейдя по <a href='{callbackUrl}'>ссылке</a>");
 
                 var user = mapper.Map<User>(userDto);
 

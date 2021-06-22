@@ -50,12 +50,12 @@ namespace Meetup.Controllers
         {
             var user = await userManager.FindByEmailAsync(model.Email);
 
-            //if (user != null)
-            //{
-            //    // проверяем, подтвержден ли email
-            //    if (!await userManager.IsEmailConfirmedAsync(user))
-            //        return BadRequest("Вы не подтвердили свой email");
-            //}
+            if (user != null)
+            {
+                // проверяем, подтвержден ли email
+                if (!await userManager.IsEmailConfirmedAsync(user))
+                    return BadRequest("Вы не подтвердили свой email");
+            }
             var result = await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
             if (result.Succeeded)
             {
