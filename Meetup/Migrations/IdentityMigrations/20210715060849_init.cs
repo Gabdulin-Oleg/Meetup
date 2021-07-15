@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-namespace Meetup.Migrations
+namespace Meetup.Migrations.IdentityMigrations
 {
     public partial class init : Migration
     {

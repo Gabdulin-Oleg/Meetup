@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-namespace Meetup.Migrations.AppDb
+namespace Meetup.Migrations
 {
     public partial class init : Migration
     {
@@ -31,11 +31,10 @@ namespace Meetup.Migrations.AppDb
                     Id = table.Column<string>(type: "text", nullable: false),
                     FirstName = table.Column<string>(type: "text", nullable: true),
                     LastName = table.Column<string>(type: "text", nullable: true),
-                    MiddleName = table.Column<string>(type: "text", nullable: true),
                     Age = table.Column<int>(type: "integer", nullable: false),
                     Email = table.Column<string>(type: "text", nullable: true),
-                    Work = table.Column<int>(type: "integer", nullable: false),
-                    Phone = table.Column<string>(type: "text", nullable: true),
+                    IsWork = table.Column<bool>(type: "boolean", nullable: false),
+                    PlaceWork = table.Column<string>(type: "text", nullable: true),
                     WorkExperience = table.Column<int>(type: "integer", nullable: false),
                     Post = table.Column<string>(type: "text", nullable: true),
                     AdditionalInformation = table.Column<string>(type: "text", nullable: true)

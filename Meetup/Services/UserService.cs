@@ -3,7 +3,6 @@ using Meetup.ApplicationDbContext;
 using Meetup.ApplicationDbContext.Model;
 using Meetup.Interfaces;
 using Meetup.Interfaces.Dtos;
-using Meetup.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -33,7 +32,6 @@ namespace Meetup.Services
             this.emailService = emailService;
             this.dbContext = dbContext;
             this.url = url;
-
             this.httpContextAccessor = httpContextAccessor;
             this.mapper = mapper;
             this.signInManager = signInManager;
@@ -99,7 +97,7 @@ namespace Meetup.Services
 
                 meetup.Images = memoryStream.ToArray();
 
-                
+
                 meetup.Id = Guid.NewGuid().ToString();
                 meetup.Speaker = await dbContext.Users.FirstAsync(p => p.Email == signInManager.Context.User.Identity.Name);
                 AddTimeMeetup(meetupLocation, meetup.DurationMeetup);
@@ -133,7 +131,7 @@ namespace Meetup.Services
 
         public async Task<ICollection<MeetupLocationDto>> GetAllMeetupLocationAsync()
         {
-            var meetupLocation = mapper.Map<ICollection<MeetupLocationDto>>(await dbContext.MeetupLocations.Include(p=>p.Meetups).Where(p => p.IsFreeTime).ToListAsync());
+            var meetupLocation = mapper.Map<ICollection<MeetupLocationDto>>(await dbContext.MeetupLocations.Include(p => p.Meetups).Where(p => p.IsFreeTime).ToListAsync());
             return meetupLocation;
         }
 

@@ -18,10 +18,6 @@ namespace Meetup.ApplicationDbContext.Model
         /// </summary>
         public string LastName { get; set; }
         /// <summary>
-        /// Отчество
-        /// </summary>
-        public string MiddleName { get; set; }
-        /// <summary>
         /// Возраст
         /// </summary>
         public int Age { get; set; }
@@ -32,11 +28,11 @@ namespace Meetup.ApplicationDbContext.Model
         /// <summary>
         /// есть ли работа
         /// </summary>
-        public WorkStatus Work { get; set; }
+        public bool IsWork { get; set; }
         /// <summary>
-        /// номер телефона
+        /// Место работы
         /// </summary>
-        public string Phone { get; set; }
+        public string PlaceWork { get; set; }
         /// <summary>
         /// Опыт работы
         /// </summary>

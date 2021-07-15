@@ -3,15 +3,17 @@ using System;
 using Meetup.ApplicationDbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-namespace Meetup.Migrations.AppDb
+namespace Meetup.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210715060156_init")]
+    partial class init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -114,20 +116,17 @@ namespace Meetup.Migrations.AppDb
                     b.Property<string>("FirstName")
                         .HasColumnType("text");
 
+                    b.Property<bool>("IsWork")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("LastName")
                         .HasColumnType("text");
 
-                    b.Property<string>("MiddleName")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Phone")
+                    b.Property<string>("PlaceWork")
                         .HasColumnType("text");
 
                     b.Property<string>("Post")
                         .HasColumnType("text");
-
-                    b.Property<int>("Work")
-                        .HasColumnType("integer");
 
                     b.Property<int>("WorkExperience")
                         .HasColumnType("integer");

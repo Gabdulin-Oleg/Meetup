@@ -1,6 +1,4 @@
-﻿using Meetup.ApplicationDbContext.Model;
-using Meetup.Interfaces.Dtos;
-using Meetup.ViewModels;
+﻿using Meetup.Interfaces.Dtos;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

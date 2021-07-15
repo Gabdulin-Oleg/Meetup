@@ -37,7 +37,11 @@ namespace Meetup.Interfaces.Dtos
         /// <summary>
         /// есть ли работа
         /// </summary>
-        public WorkStatus Work { get; set; }
+        public bool IsWork { get; set; }
+        /// <summary>
+        /// Место работы
+        /// </summary>
+        public string PlaceWork { get; set; }
         /// <summary>
         /// Опыт работы
         /// </summary>

@@ -3,15 +3,17 @@ using System;
 using Meetup.ApplicationDbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-namespace Meetup.Migrations
+namespace Meetup.Migrations.IdentityMigrations
 {
     [DbContext(typeof(Identity))]
-    partial class IdentityModelSnapshot : ModelSnapshot
+    [Migration("20210715060849_init")]
+    partial class init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
