@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Meetup.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20210715060156_init")]
-    partial class init
+    [Migration("20210809103445_Update_WorkExprence")]
+    partial class Update_WorkExprence
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,29 +20,6 @@ namespace Meetup.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63)
                 .HasAnnotation("ProductVersion", "5.0.6")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-            modelBuilder.Entity("Meetup.ApplicationDbContext.Model.Language", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.Property<int?>("UserId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("UserId1")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId1");
-
-                    b.ToTable("Language");
-                });
 
             modelBuilder.Entity("Meetup.ApplicationDbContext.Model.MeetupLocation", b =>
                 {
@@ -104,11 +81,11 @@ namespace Meetup.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("text");
 
-                    b.Property<string>("AdditionalInformation")
-                        .HasColumnType("text");
+                    b.Property<DateTime>("Age")
+                        .HasColumnType("timestamp without time zone");
 
-                    b.Property<int>("Age")
-                        .HasColumnType("integer");
+                    b.Property<string>("CompanyName")
+                        .HasColumnType("text");
 
                     b.Property<string>("Email")
                         .HasColumnType("text");
@@ -116,20 +93,20 @@ namespace Meetup.Migrations
                     b.Property<string>("FirstName")
                         .HasColumnType("text");
 
-                    b.Property<bool>("IsWork")
-                        .HasColumnType("boolean");
-
                     b.Property<string>("LastName")
                         .HasColumnType("text");
 
-                    b.Property<string>("PlaceWork")
+                    b.Property<string>("Prof")
                         .HasColumnType("text");
 
-                    b.Property<string>("Post")
+                    b.Property<string>("WorkExperience")
                         .HasColumnType("text");
 
-                    b.Property<int>("WorkExperience")
-                        .HasColumnType("integer");
+                    b.Property<bool>("WorkHas")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("WorkPosition")
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -152,13 +129,6 @@ namespace Meetup.Migrations
                     b.HasIndex("UsersId");
 
                     b.ToTable("MeetupsUser");
-                });
-
-            modelBuilder.Entity("Meetup.ApplicationDbContext.Model.Language", b =>
-                {
-                    b.HasOne("Meetup.ApplicationDbContext.Model.User", null)
-                        .WithMany("Language")
-                        .HasForeignKey("UserId1");
                 });
 
             modelBuilder.Entity("Meetup.ApplicationDbContext.Model.Meetups", b =>
@@ -188,11 +158,6 @@ namespace Meetup.Migrations
             modelBuilder.Entity("Meetup.ApplicationDbContext.Model.MeetupLocation", b =>
                 {
                     b.Navigation("Meetups");
-                });
-
-            modelBuilder.Entity("Meetup.ApplicationDbContext.Model.User", b =>
-                {
-                    b.Navigation("Language");
                 });
 #pragma warning restore 612, 618
         }

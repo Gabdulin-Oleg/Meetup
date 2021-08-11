@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Meetup.Migrations
 {
@@ -31,13 +30,13 @@ namespace Meetup.Migrations
                     Id = table.Column<string>(type: "text", nullable: false),
                     FirstName = table.Column<string>(type: "text", nullable: true),
                     LastName = table.Column<string>(type: "text", nullable: true),
-                    Age = table.Column<int>(type: "integer", nullable: false),
+                    Age = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     Email = table.Column<string>(type: "text", nullable: true),
-                    IsWork = table.Column<bool>(type: "boolean", nullable: false),
-                    PlaceWork = table.Column<string>(type: "text", nullable: true),
+                    WorkHas = table.Column<bool>(type: "boolean", nullable: false),
+                    CompanyName = table.Column<string>(type: "text", nullable: true),
                     WorkExperience = table.Column<int>(type: "integer", nullable: false),
-                    Post = table.Column<string>(type: "text", nullable: true),
-                    AdditionalInformation = table.Column<string>(type: "text", nullable: true)
+                    WorkPosition = table.Column<string>(type: "text", nullable: true),
+                    Prof = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -68,27 +67,6 @@ namespace Meetup.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Language",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(type: "text", nullable: true),
-                    UserId = table.Column<int>(type: "integer", nullable: true),
-                    UserId1 = table.Column<string>(type: "text", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Language", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Language_Users_UserId1",
-                        column: x => x.UserId1,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "MeetupsUser",
                 columns: table => new
                 {
@@ -113,11 +91,6 @@ namespace Meetup.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Language_UserId1",
-                table: "Language",
-                column: "UserId1");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Meetups_MeetupLocationId",
                 table: "Meetups",
                 column: "MeetupLocationId");
@@ -136,9 +109,6 @@ namespace Meetup.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Language");
-
             migrationBuilder.DropTable(
                 name: "MeetupsUser");
 

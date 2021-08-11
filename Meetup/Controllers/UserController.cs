@@ -28,21 +28,28 @@ namespace Meetup.Controllers
             this.mapper = mapper;
         }
 
-        [HttpGet]
+        [HttpGet("Get")]
         public IActionResult Get()
         {
-            return Ok();
+            return Ok(true);
         }
 
         [HttpPost("Register")]
         public async Task<IActionResult> Register(RegistredViewModel model)
-        {
+       {
             var userDto = mapper.Map<UserDto>(model);
 
             if (await userService.RegistrationAsync(userDto))
-                return RedirectToAction("Get", "User");
+                return Ok();
 
             return BadRequest("Пользователь с таким Email уже сушествует");
+        }
+        [HttpGet("CheckEmail/{email}")]
+        public async Task<IActionResult> CheckEmail(string email)
+        {
+            //if  (await userService.CheckEmail(email))
+                return Ok(await userService.CheckEmail(email));
+            //return Ok(false);
         }
 
         [HttpPost("Login")]
@@ -57,13 +64,14 @@ namespace Meetup.Controllers
                     return BadRequest("Вы не подтвердили свой email");
             }
             var result = await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
+            
             if (result.Succeeded)
             {
                 if (await userManager.IsInRoleAsync(user, "admin"))
 
                     // перенаправляем на админку если это админ
                     return RedirectToAction("GetAllUser", "Admin");
-
+                await userService.SignUpMeetup("1");
                 return RedirectToAction("Get", "User");
             }
             else
@@ -103,7 +111,7 @@ namespace Meetup.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> ConfirmationEmail(string userId, string code)
         {
-            if (!await userService.ConfirmationEmail(userId, code))
+            if (await userService.ConfirmationEmail(userId, code))
                 return RedirectToAction("Get", "User");
             return BadRequest();
         }

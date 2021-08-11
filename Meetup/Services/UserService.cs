@@ -36,21 +36,26 @@ namespace Meetup.Services
             this.mapper = mapper;
             this.signInManager = signInManager;
         }
-
+        public async Task<bool> CheckEmail(string email)
+        {
+            if (await dbContext.Set<User>().FirstOrDefaultAsync(p => p.Email == email) != null)
+                return true;
+            return false;
+        }
         public async Task<bool> RegistrationAsync(UserDto userDto)
         {
             var applicationUser = mapper.Map<ApplicationUser>(userDto);
             applicationUser.Id = Guid.NewGuid().ToString();
 
-            var result = await userManager.CreateAsync(applicationUser, userDto.Password);
+            var result = await userManager.CreateAsync(applicationUser);
             if (result.Succeeded)
             {
                 var code = await userManager.GenerateEmailConfirmationTokenAsync(applicationUser);
                 string callbackUrl = url.Action("ConfirmationEmail", "User",
                   new { userId = applicationUser.Id, code = code }, httpContextAccessor.HttpContext.Request.Scheme, httpContextAccessor.HttpContext.Request.Host.Value);
 
-                await emailService.SendEmailAsync(applicationUser.Email, "Confirm your account",
-                    $"Подтвердите регистрацию, перейдя по <a href='{callbackUrl}'>ссылке</a>");
+                //await emailService.SendEmailAsync(applicationUser.Email, "Confirm your account",
+                //    $"Подтвердите регистрацию, перейдя по <a href='{callbackUrl}'>ссылке</a>");
 
                 var user = mapper.Map<User>(userDto);
 
@@ -145,7 +150,5 @@ namespace Meetup.Services
             }
             return meetupLocation;
         }
-
-
     }
 }

@@ -50,13 +50,13 @@ namespace Meetup.Services
 
         public async Task<ICollection<UserDto>> GetAllUsersAsync()
         {
-            var users = await dbContext.Users.Include(p => p.Language).ToListAsync();
+            var users = await dbContext.Users.ToListAsync();
             return mapper.Map<ICollection<UserDto>>(users);
         }
 
         public async Task<UserDto> GetUserByIdAsync(string id)
         {
-            var user = await dbContext.Users.Include(p => p.Language).FirstOrDefaultAsync(p => p.Id == id);
+            var user = await dbContext.Users.FirstOrDefaultAsync(p => p.Id == id);
             return mapper.Map<UserDto>(user);
         }
 

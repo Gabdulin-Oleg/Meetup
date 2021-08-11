@@ -1,5 +1,6 @@
 ﻿using Meetup.ApplicationDbContext.Model;
 using Meetup.ApplicationDbContext.Model.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -10,60 +11,42 @@ namespace Meetup.ViewModels
         /// <summary>
         /// ID
         /// </summary>
-        public int Id { get; set; }
+        public string Id { get; set; }
         /// <summary>
-        /// Имя 
+        /// Имя
         /// </summary>
-        [Required]
         public string FirstName { get; set; }
         /// <summary>
         /// Фамилия
         /// </summary>
-        [Required]
         public string LastName { get; set; }
-        /// <summary>
-        /// Отчество
-        /// </summary>
-        public string MiddleName { get; set; }
         /// <summary>
         /// Возраст
         /// </summary>
-        [Required]
-        public int Age { get; set; }
+        public DateTime Age { get; set; }
         /// <summary>
         /// Email
         /// </summary>
-        [Required]
-        [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
-        /// <summary>
-        /// пароль
-        /// </summary>
-        [Required]
-        [DataType(DataType.Password)]
-        public string Password { get; set; }
         /// <summary>
         /// есть ли работа
         /// </summary>
-        [Required]
-        public WorkStatus Work { get; set; }
+        public bool WorkHas { get; set; }
         /// <summary>
-        /// опыт работы
+        /// Место работы
         /// </summary>
-        public int WorkExperience { get; set; }
+        public string CompanyName { get; set; }
         /// <summary>
-        /// занимаемый пост
+        /// Опыт работы
         /// </summary>
-        public string Post { get; set; }
+        public string WorkExperience { get; set; }
         /// <summary>
-        /// владение языками
+        /// Занимаема должность
         /// </summary>
-        [Required]
-        public IEnumerable<Language> Language { get; set; }
+        public string WorkPosition { get; set; }
         /// <summary>
-        /// дополниткльныя информация
+        /// Какими языками владеет
         /// </summary>
-        [StringLength(1000)]
-        public string AdditionalInformation { get; set; }
+        public string Prof { get; set; }
     }
 }

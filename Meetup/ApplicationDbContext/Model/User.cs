@@ -1,4 +1,5 @@
 ﻿using Meetup.ApplicationDbContext.Model.Enums;
+using System;
 using System.Collections.Generic;
 
 namespace Meetup.ApplicationDbContext.Model
@@ -20,7 +21,7 @@ namespace Meetup.ApplicationDbContext.Model
         /// <summary>
         /// Возраст
         /// </summary>
-        public int Age { get; set; }
+        public DateTime Age { get; set; }
         /// <summary>
         /// Email
         /// </summary>
@@ -28,27 +29,27 @@ namespace Meetup.ApplicationDbContext.Model
         /// <summary>
         /// есть ли работа
         /// </summary>
-        public bool IsWork { get; set; }
+        public bool WorkHas { get; set; }
         /// <summary>
         /// Место работы
         /// </summary>
-        public string PlaceWork { get; set; }
+        public string CompanyName { get; set; }
         /// <summary>
         /// Опыт работы
         /// </summary>
-        public int WorkExperience { get; set; }
+        public string WorkExperience { get; set; }
         /// <summary>
         /// Занимаема должность
         /// </summary>
-        public string Post { get; set; }
+        public string WorkPosition { get; set; }
         /// <summary>
         /// Какими языками владеет
         /// </summary>
-        public ICollection<Language> Language { get; set; }
+        public string Prof { get; set; }
         /// <summary>
         /// дополнительная иформация
         /// </summary>
-        public string AdditionalInformation { get; set; }
+        //public string AdditionalInformation { get; set; }
 
         public ICollection<Meetups> Meetups { get; set; }
         public User()

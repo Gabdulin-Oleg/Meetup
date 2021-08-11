@@ -10,11 +10,11 @@ namespace Meetup
 {
     public class DataSeet
     {
-        private readonly AppDbContext dbContext;
-        private readonly Identity identityDbContext;
-        private readonly UserManager<ApplicationUser> userManager;
-        private readonly RoleManager<IdentityRole> roleManager;
-        AdminOption adminOption;
+        readonly AppDbContext dbContext;
+        readonly Identity identityDbContext;
+        readonly UserManager<ApplicationUser> userManager;
+        readonly RoleManager<IdentityRole> roleManager;
+        readonly AdminOption adminOption;
 
         public DataSeet(IOptions<AdminOption> options, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, AppDbContext dbContext, Identity identityDbContext)
         {

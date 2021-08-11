@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Meetup.Migrations.IdentityMigrations
 {
     [DbContext(typeof(Identity))]
-    [Migration("20210715060849_init")]
+    [Migration("20210809052719_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

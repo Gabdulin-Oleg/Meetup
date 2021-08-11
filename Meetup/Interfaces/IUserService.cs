@@ -43,5 +43,6 @@ namespace Meetup.Interfaces
         /// <param name="id"></param>
         /// <returns></returns>
         Task<MeetupLocationDto> GetMeetupLocationByIdAsync(string id);
+        Task<bool> CheckEmail(string email);
     }
 }

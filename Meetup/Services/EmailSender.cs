@@ -9,7 +9,7 @@ namespace Meetup.Services
 {
     public class EmailSender : IEmailSender
     {
-        EmailOptions options;
+        readonly EmailOptions options;
         public EmailSender(IOptions<EmailOptions> options)
         {
             this.options = options.Value;

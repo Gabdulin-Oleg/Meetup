@@ -20,7 +20,7 @@ namespace Meetup
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-     
+                    webBuilder.UseUrls("https://*:5001", "http://*:5000");
                 });
 
         private static async Task SeedData(IServiceScope serviceScope)
