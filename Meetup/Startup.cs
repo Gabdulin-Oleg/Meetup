@@ -40,7 +40,7 @@ namespace Meetup
             services.AddDbContext<Identity>((sp, option) => option.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
             services.AddDbContext<AppDbContext>((sp, option) => option.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllersWithViews();
-            
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Meetup", Version = "v1" });
@@ -70,9 +70,9 @@ namespace Meetup
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Meetup v1"));
             }
+            app.UseSwagger();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Meetup v1"));
 
             app.UseAuthentication();
             app.UseAuthorization();
@@ -80,7 +80,7 @@ namespace Meetup
             app.UseHttpsRedirection();
             app.UseSpaStaticFiles();
             app.UseRouting();
-            app.UseCors(builder => builder.WithOrigins("http://localhost:8080").AllowAnyMethod().AllowAnyHeader().AllowCredentials());
+            app.UseCors(builder => builder.WithOrigins("http://192.168.4.190:8080").AllowAnyMethod().AllowAnyHeader().AllowCredentials());
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

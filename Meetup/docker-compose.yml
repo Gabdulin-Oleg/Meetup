@@ -1,0 +1,29 @@
+﻿version: '3.4'
+
+volumes:
+  postgres-meetup:
+
+services:
+  meetup:
+    container_name: meetup
+    image: meetup
+    environment:
+      - connectionstrings__defaultconnection=server=${postgres_host};port=${postgres_port};database=${postgres_db};user id=${postgres_user};password=${postgres_password}
+    ports:
+      - 80:80
+      - 443:443 
+
+
+  postgresdb:
+    container_name: postgresdb
+    image: postgres:latest
+    restart: always
+    ports:
+     - 5432:5432 
+    volumes:
+     - postgres-meetup:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      PGDATA: "/var/lib/postgresql/data/pgdata"
+
+  
